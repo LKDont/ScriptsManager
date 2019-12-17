@@ -10,7 +10,7 @@ import time
 from prettytable import PrettyTable
 
 # 版本号
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 
 USER_HOME = os.path.expanduser('~')
 SCRIPTS_MAN_DIR = os.path.join(USER_HOME, ".scripts-man")
@@ -285,7 +285,7 @@ def add_script(db_path, script_path, script_info, copy):
     添加脚本
     """
     if not os.path.exists(script_path) or not os.path.isfile(script_path):
-        print_err_msg("脚本路径不存在")
+        print_err_msg("脚本路径不存在：" + script_path)
         exit_app()
 
     # 获取文件名
@@ -421,6 +421,13 @@ def main():
             path = sys.argv[3]
         else:
             path = sys.argv[2]
+
+        # 转换path
+        if path.startswith("~/"):
+            path = os.path.join(USER_HOME, path[2:])
+        elif not path.startswith("/"):
+            path = os.path.join(os.getcwd(), path)
+
         add_script(SCRIPTS_DB_PATH, path, "", copy=cp)
 
     elif comm == "run":
@@ -429,7 +436,7 @@ def main():
             print_help()
             exit_app()
         name = sys.argv[2]
-        run_script(SCRIPTS_DB_PATH, name, sys.argv[3:argv_len])
+        run_script(SCRIPTS_DB_PATH, name, sys.argv[3:])
 
     else:
         print_help()
