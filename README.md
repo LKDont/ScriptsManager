@@ -25,7 +25,7 @@ pyinstaller -F scripts-man.py
 
 
 ## 使用
-
+```
 脚本管理器
   -v, -version 版本号
   -h, -help 帮助信息
@@ -34,3 +34,4 @@ pyinstaller -F scripts-man.py
   rm <script_name> 删除脚本
   autoremove 自动删除无效脚本
   run <script_name> 运行脚本
+```
